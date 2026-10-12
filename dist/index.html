@@ -4,17 +4,29 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ernesto Musca — Forniture professionali nel Salento</title>
 <meta name="description" content="Detergenza, carta, monouso, attrezzature e packaging. Ernesto Musca, a Galatone: tutto il necessario per la tua attività, sempre con te.">
-<meta name="theme-color" content="#f7f6f0"><meta property="og:title" content="Ernesto Musca — Tutto il necessario, sempre con te."><meta property="og:description" content="Forniture professionali per la tua attività. Detergenza, monouso e packaging nel Salento."><meta property="og:type" content="website">
+<meta name="theme-color" content="#ffffff"><meta property="og:title" content="Ernesto Musca — Tutto il necessario, sempre con te."><meta property="og:description" content="Forniture professionali per la tua attività. Detergenza, monouso e packaging nel Salento."><meta property="og:type" content="website">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml"><link rel="preload" as="image" href="assets/00_hero.webp"><link rel="stylesheet" href="style.css"><script src="app.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#contenuto">Vai al contenuto</a>
-<div class="loader" aria-hidden="true"><div class="loader-inner"><img class="loader-logo" src="assets/logo.svg" width="160" height="160" alt=""><div class="loader-name">Ernesto Musca</div><div class="loader-line"></div></div></div>
-<header class="header wrap">
+<div class="loader" aria-hidden="true" hidden>
+  <div class="intro-stage">
+    <div class="intro-name"><span class="initial initial-e">E</span><span class="name-rest">rnesto</span><span class="name-space"> </span><span class="initial initial-m">M</span><span class="name-rest">usca</span></div>
+    <div class="composed-logo">
+      <img class="logo-whole" src="assets/logo.svg" alt="" width="180" height="185">
+      <img class="logo-piece piece-left" src="assets/logo.svg" alt="" width="180" height="185">
+      <img class="logo-piece piece-right" src="assets/logo.svg" alt="" width="180" height="185">
+      <img class="logo-piece piece-bottom" src="assets/logo.svg" alt="" width="180" height="185">
+      <img class="logo-piece piece-e" src="assets/logo.svg" alt="" width="180" height="185">
+    </div>
+    <p class="intro-signature">Ernesto Musca<span>Il necessario. La nostra firma.</span></p>
+  </div>
+</div>
+<header class="site-header"><div class="header wrap">
 <a class="brand" href="#" aria-label="Ernesto Musca, inizio pagina"><img src="assets/logo.svg" alt="" width="56" height="56"><div class="brand-name">Ernesto Musca<span>Forniture professionali</span></div></a>
 <button class="menu-button" aria-expanded="false" aria-controls="navigation">Menu <span aria-hidden="true">＋</span></button>
-<nav class="nav" id="navigation" aria-label="Navigazione principale"><a href="#prodotti">I prodotti</a><a href="#azienda">Chi siamo</a><a href="#contatti" class="pill">Parliamone <span class="arrow" aria-hidden="true">↗</span></a></nav>
-</header>
+<nav class="nav" id="navigation" aria-label="Navigazione principale"><a href="#contenuto">Home</a><a href="#azienda">Chi siamo</a><a href="#prodotti">I prodotti</a><a href="#dove-siamo">Dove siamo</a><a href="#contatti">Contatti</a></nav>
+</div></header>
 <main id="contenuto">
 <section class="hero" aria-labelledby="hero-title">
 <img class="hero-image" src="assets/00_hero.webp" alt="Prodotti per l’igiene, carta e packaging su una superficie in pietra chiara" width="2000" height="1131" fetchpriority="high">
@@ -37,7 +49,17 @@
 <form class="form reveal" id="request-form"><label class="field">Il tuo nome <input name="name" autocomplete="name" required maxlength="100" placeholder="Nome e cognome"></label><label class="field">La tua attività <input name="company" autocomplete="organization" maxlength="150" placeholder="Nome dell’attività"></label><label class="field full">Email <input name="email" type="email" autocomplete="email" required maxlength="200" placeholder="La tua email"></label><label class="field full">Cosa ti interessa? <select name="category" id="category"><option value="Una fornitura per la mia attività">Scegli una linea</option><option>Detergenza</option><option>Carta</option><option>Monouso</option><option>Attrezzature</option><option>Settore food</option><option>Packaging</option><option>Una fornitura completa</option></select></label><label class="field full">Il tuo messaggio <textarea name="message" required maxlength="3000" placeholder="Di quali prodotti hai bisogno?"></textarea></label><div class="form-bottom full"><p>Si apre la tua app email con la richiesta pronta da inviare.</p><button class="pill solid" type="submit">Prepara la richiesta <span class="arrow" aria-hidden="true">↗</span></button></div><p class="form-status full" id="form-status" role="status"></p></form>
 </div></section>
 </main>
-<footer class="footer"><div class="wrap"><div class="footer-top"><div><a href="#" class="footer-brand">Ernesto Musca</a><p>Tutto il necessario, sempre con te.</p></div><div><p>Galatone · Lecce · Salento</p><a href="tel:+390833864341">Tel. 0833 864341</a></div><div><a href="mailto:info@ernestomusca.com">info@ernestomusca.com</a><p><a href="https://www.google.com/maps/search/?api=1&query=Ernesto+Musca+Galatone" target="_blank" rel="noopener noreferrer">Cercaci su Maps ↗</a></p></div></div><div class="footer-bottom"><span>© <span id="year">2026</span> Ernesto Musca S.r.l.</span><button class="text-button" id="privacy-button">Privacy e cookie</button><button class="text-button" id="replay-intro">Rivedi l’intro ↗</button></div></div></footer>
+<footer class="footer" id="dove-siamo"><div class="wrap">
+<div class="footer-lead"><p>Una fornitura.<br><em>Una relazione di fiducia.</em></p><a href="mailto:info@ernestomusca.com" class="footer-contact">Scrivici <span aria-hidden="true">↗</span></a></div>
+<div class="footer-grid">
+<div class="footer-identity"><a class="brand" href="#"><img src="assets/logo.svg" width="56" height="56" alt="Logo Ernesto Musca"><div class="brand-name">Ernesto Musca<span>Forniture professionali</span></div></a><p>Detergenza, monouso e packaging.<br>Al fianco della tua attività.</p></div>
+<div class="footer-column"><h2>Esplora</h2><a href="#azienda">Chi siamo</a><a href="#prodotti">I prodotti</a><a href="#contatti">Contatti</a></div>
+<div class="footer-column"><h2>Parla con noi</h2><a href="tel:+393246029841">324 602 9841 · Filippo</a><a href="tel:+390833864341">0833 864341</a><a href="mailto:info@ernestomusca.com">info@ernestomusca.com</a><a href="https://wa.me/393246029841" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a></div>
+<div class="footer-column"><h2>Vieni a trovarci</h2><p>73044 Galatone<br>Lecce, Salento</p><a href="https://www.google.com/maps/search/?api=1&query=Ernesto+Musca+Galatone" target="_blank" rel="noopener noreferrer">Apri Maps ↗</a></div>
+</div>
+<div class="footer-wordmark" aria-hidden="true">Ernesto Musca<span>.</span></div>
+<div class="footer-bottom"><span>© <span id="year">2026</span> Ernesto Musca S.r.l.</span><div><button class="text-button" id="privacy-button">Privacy e cookie</button><button class="text-button" id="replay-intro">Rivedi l’intro ↗</button><a href="#contenuto">Torna su ↑</a></div></div>
+</div></footer>
 <dialog id="product-dialog" aria-labelledby="dialog-title"><button class="close" aria-label="Chiudi dettagli prodotto">×</button><div class="dialog-layout"><img id="dialog-image" class="dialog-photo" src="assets/01_detergenza.webp" alt=""><div class="dialog-content"><div class="section-note" id="dialog-number"></div><h2 id="dialog-title"></h2><p id="dialog-description"></p><ul id="dialog-products"></ul><button class="pill solid" id="product-inquiry">Richiedi informazioni <span class="arrow" aria-hidden="true">↗</span></button></div></div></dialog>
 <dialog id="privacy-dialog" aria-labelledby="privacy-title"><button class="close" aria-label="Chiudi informazioni privacy">×</button><div class="privacy-content"><h2 id="privacy-title">Privacy e cookie</h2><p>Questa pagina di presentazione non utilizza cookie di profilazione, strumenti pubblicitari o analytics.</p><h3>Le tue richieste</h3><p>Il modulo prepara un messaggio nella tua applicazione email. I dati inseriti non vengono salvati su questo sito e la richiesta viene inviata solo quando confermi l’invio nell’app email. Puoi contattare Ernesto Musca all’indirizzo info@ernestomusca.com per informazioni sulla gestione dei dati condivisi nella corrispondenza.</p><h3>Collegamenti esterni</h3><p>I pulsanti WhatsApp e Maps aprono servizi esterni, ai quali si applicano le rispettive informative. Il servizio di hosting può gestire dati tecnici necessari al funzionamento e, per l’anteprima privata, all’accesso.</p></div></dialog>
 </body></html>

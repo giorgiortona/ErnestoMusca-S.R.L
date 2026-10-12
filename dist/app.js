@@ -7,13 +7,56 @@ const products = {
  imballaggi:{title:'Packaging',number:'06',image:'06_imballaggi',description:'Imballaggi e contenitori per custodire, trasportare e presentare.',items:['Scatole in cartone e per pizzerie','Imballaggi per alimenti','Contenitori in plastica','Buste e sacchetti','Film estensibile e reggette','Scatole e vassoi per dolci e pasticceria']}
 };
 const loader=document.querySelector('.loader');
-loader.addEventListener('animationend',e=>{if(e.animationName==='loader-exit')loader.classList.add('hide')});
-document.querySelector('#replay-intro').addEventListener('click',()=>{loader.classList.add('hide');requestAnimationFrame(()=>requestAnimationFrame(()=>loader.classList.remove('hide')))});
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
+let introAnimations=[],introTimer;
+function finishIntro(){clearTimeout(introTimer);loader.hidden=true;introAnimations.forEach(a=>a.cancel());introAnimations=[]}
+function playIntro(){
+ finishIntro();if(reduceMotion.matches)return;
+ loader.hidden=false;
+ const ease='cubic-bezier(.65,0,.25,1)';
+ const animate=(element,frames,options)=>{const animation=element.animate(frames,{fill:'both',easing:ease,...options});introAnimations.push(animation);return animation};
+ const name=loader.querySelector('.intro-name'),logo=loader.querySelector('.composed-logo');
+ const e=loader.querySelector('.initial-e'),m=loader.querySelector('.initial-m');
+ const box=logo.getBoundingClientRect();
+ animate(name,[{opacity:0},{opacity:1}],{duration:400});
+ loader.querySelectorAll('.name-rest,.name-space').forEach(el=>animate(el,[{opacity:1,filter:'blur(0px)'},{opacity:0,filter:'blur(6px)'}],{delay:600,duration:450}));
+ for(const [letter,x,y,scale] of [[e,.63,.62,.85],[m,.5,.37,1.65]]){
+  const rect=letter.getBoundingClientRect();const dx=box.left+box.width*x-(rect.left+rect.width/2),dy=box.top+box.height*y-(rect.top+rect.height/2);
+  animate(letter,[{transform:'translate(0,0) scale(1)',opacity:1,offset:0},{transform:`translate(${dx}px,${dy}px) scale(${scale})`,opacity:1,offset:.74},{transform:`translate(${dx}px,${dy}px) scale(${scale})`,opacity:0,offset:1}],{delay:800,duration:1000});
+ }
+ const pieces=[['.piece-left',-22,-12,1300],['.piece-right',22,-12,1370],['.piece-bottom',0,24,1440],['.piece-e',0,0,1490]];
+ pieces.forEach(([selector,x,y,delay])=>animate(loader.querySelector(selector),[{opacity:0,transform:`translate(${x}px,${y}px) scale(.92)`},{opacity:1,transform:'translate(0,0) scale(1)'}],{delay,duration:580}));
+ animate(loader.querySelector('.logo-whole'),[{opacity:0},{opacity:1}],{delay:2050,duration:120});
+ animate(loader.querySelector('.intro-signature'),[{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}],{delay:1850,duration:450});
+ const exit=animate(loader,[{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-30px)'}],{delay:2550,duration:500});
+ exit.finished.then(finishIntro).catch(()=>{});
+ introTimer=setTimeout(finishIntro,3400);
+}
+reduceMotion.addEventListener('change',()=>{if(reduceMotion.matches)finishIntro()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')finishIntro()});
+document.querySelector('#replay-intro').addEventListener('click',playIntro);
+playIntro();
 const menu=document.querySelector('.menu-button'),nav=document.querySelector('.nav');
 function closeMenu(){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.innerHTML='Menu <span aria-hidden="true">＋</span>'}
 menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.innerHTML=open?'Chiudi <span aria-hidden="true">−</span>':'Menu <span aria-hidden="true">＋</span>'});
 nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){closeMenu();menu.focus()}});
+const header=document.querySelector('.site-header');
+let lastScroll=window.scrollY,travel=0,lastDirection=0,scrollQueued=false;
+function updateHeader(){
+ const y=Math.max(0,window.scrollY),delta=y-lastScroll,direction=Math.sign(delta);
+ if(direction!==lastDirection)travel=0;
+ travel+=delta;
+ header.classList.toggle('scrolled',y>12);
+ if(y<100||nav.classList.contains('open'))header.classList.remove('header-away');
+ else if(travel < -7)header.classList.remove('header-away');
+ else if(travel > 35&&y>180&&!header.contains(document.activeElement))header.classList.add('header-away');
+ lastScroll=y;if(direction)lastDirection=direction;scrollQueued=false;
+}
+window.addEventListener('scroll',()=>{if(!scrollQueued){scrollQueued=true;requestAnimationFrame(updateHeader)}},{passive:true});
+header.addEventListener('focusin',()=>header.classList.remove('header-away'));
+menu.addEventListener('click',()=>header.classList.remove('header-away'));
+updateHeader();
 const dialog=document.querySelector('#product-dialog');let currentProduct;
 document.querySelectorAll('[data-product]').forEach(button=>button.addEventListener('click',()=>{currentProduct=products[button.dataset.product];document.querySelector('#dialog-title').textContent=currentProduct.title;document.querySelector('#dialog-number').textContent='Linea '+currentProduct.number;document.querySelector('#dialog-description').textContent=currentProduct.description;const img=document.querySelector('#dialog-image');img.src='assets/'+currentProduct.image+'.webp';img.alt=currentProduct.title;document.querySelector('#dialog-products').replaceChildren(...currentProduct.items.map(text=>{const li=document.createElement('li');li.textContent=text;return li}));dialog.showModal()}));
 document.querySelectorAll('dialog').forEach(d=>{d.querySelector('.close').addEventListener('click',()=>d.close());d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}})});
