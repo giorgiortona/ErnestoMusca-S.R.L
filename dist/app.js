@@ -105,19 +105,15 @@ function playIntro(){
  loader.hidden=false;
  const ease='cubic-bezier(.65,0,.25,1)';
  const animate=(element,frames,options)=>{const animation=element.animate(frames,{fill:'both',easing:ease,...options});introAnimations.push(animation);return animation};
- const name=loader.querySelector('.intro-name'),logo=loader.querySelector('.composed-logo');
- const e=loader.querySelector('.initial-e'),m=loader.querySelector('.initial-m');
- const box=logo.getBoundingClientRect();
- animate(name,[{opacity:0},{opacity:1}],{duration:400});
- loader.querySelectorAll('.name-rest,.name-space').forEach(el=>animate(el,[{opacity:1,filter:'blur(0px)'},{opacity:0,filter:'blur(6px)'}],{delay:600,duration:450}));
- for(const [letter,x,y,scale] of [[e,.63,.62,.85],[m,.5,.37,1.65]]){
-  const rect=letter.getBoundingClientRect();const dx=box.left+box.width*x-(rect.left+rect.width/2),dy=box.top+box.height*y-(rect.top+rect.height/2);
-  animate(letter,[{transform:'translate(0,0) scale(1)',opacity:1,offset:0},{transform:`translate(${dx}px,${dy}px) scale(${scale})`,opacity:1,offset:.74},{transform:`translate(${dx}px,${dy}px) scale(${scale})`,opacity:0,offset:1}],{delay:800,duration:1000});
- }
- const pieces=[['.piece-left',-22,-12,1300],['.piece-right',22,-12,1370],['.piece-bottom',0,24,1440],['.piece-e',0,0,1490]];
- pieces.forEach(([selector,x,y,delay])=>animate(loader.querySelector(selector),[{opacity:0,transform:`translate(${x}px,${y}px) scale(.92)`},{opacity:1,transform:'translate(0,0) scale(1)'}],{delay,duration:580}));
- animate(loader.querySelector('.logo-whole'),[{opacity:0},{opacity:1}],{delay:2050,duration:120});
- animate(loader.querySelector('.intro-signature'),[{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}],{delay:1850,duration:450});
+ const stage=loader.querySelector('.brand-intro-stage');
+ const mark=loader.querySelector('.brand-intro-mark');
+ const name=loader.querySelector('.brand-intro-name');
+ const offset=(stage.getBoundingClientRect().width-mark.getBoundingClientRect().width)/2;
+ const scale=Math.max(1,Math.min(170,innerWidth*.36)/mark.getBoundingClientRect().width);
+ const centered=`translateX(${offset}px) scale(${scale})`;
+ animate(mark,[{opacity:0,transform:centered},{opacity:1,transform:centered}],{duration:420});
+ animate(mark,[{transform:centered},{transform:'translateX(0) scale(1)'}],{delay:700,duration:1050});
+ animate(name,[{opacity:0,clipPath:'inset(0 100% 0 0)',transform:'translateX(-14px)'},{opacity:1,clipPath:'inset(0 0% 0 0)',transform:'translateX(0)'}],{delay:1100,duration:900});
  const exit=animate(loader,[{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-30px)'}],{delay:2550,duration:500});
  exit.finished.then(finishIntro).catch(()=>{});
  introTimer=setTimeout(finishIntro,3400);

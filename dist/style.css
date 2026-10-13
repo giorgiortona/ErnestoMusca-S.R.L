@@ -28,3 +28,8 @@
 @media(max-width:1100px){.values-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.values{padding-block:60px}.values-grid{gap:30px 20px}.value h3{font-size:25px}.value p{font-size:17px}.product h3{font-size:20px}.product>p{font-size:16px}.product-discover{font-size:15px;gap:8px}.dialog-content h2{font-size:34px}.dialog-photo{max-height:210px}}
 @media(max-width:360px){.values-grid{grid-template-columns:1fr}.product-grid{grid-template-columns:1fr}.product-image{aspect-ratio:4/4.3}}
+
+/* Original artwork: exact name lettering and baseline from the supplied image. */
+.brand-intro-stage{position:relative;width:min(860px,90vw);aspect-ratio:1040/264}
+.brand-intro-mark{position:absolute;left:0;top:0;width:24.71154%;height:100%;transform-origin:center}
+.brand-intro-name{position:absolute;left:25.76923%;top:68.18182%;width:74.23077%;height:31.81818%;object-fit:contain;opacity:0}
