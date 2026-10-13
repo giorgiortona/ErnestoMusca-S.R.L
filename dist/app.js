@@ -1,10 +1,100 @@
 const products = {
- detergenza:{title:'Detergenza',number:'01',image:'01_detergenza',description:'Soluzioni per la pulizia e la cura di ogni ambiente di lavoro.',items:['Detergenti per pavimenti, superfici e vetri','Prodotti per bagno, cucine e mense','Sgrassatori e disincrostanti','Detergenti igienizzanti e concentrati','Detergenti e brillantanti per lavastoviglie']},
- carta:{title:'Carta',number:'02',image:'02_carta',description:'Una gamma completa per l’igiene quotidiana e il servizio.',items:['Carta igienica','Asciugamani piegati e in rotolo','Carta industriale e bobine','Tovaglioli']},
- monouso:{title:'Monouso',number:'03',image:'03_monouso',description:'I consumabili che rendono più semplice il tuo lavoro, ogni giorno.',items:['Guanti e copriscarpe','Bicchieri e cannucce','Shopper bio','Consumabili per la tua attività']},
- attrezzature:{title:'Attrezzature',number:'04',image:'04_attrezzature',description:'Tutto l’occorrente per prenderti cura dei tuoi spazi.',items:['Mop, frange e manici','Panni e spugne','Secchi e carrelli','Tergivetro e dispenser']},
- food:{title:'Settore food',number:'05',image:'05_food',description:'Monouso per la ristorazione, l’asporto e ogni momento di servizio.',items:['Piatti e bicchieri','Posate e contenitori in legno','Vaschette e pellicole termosaldabili','Box e vassoi']},
- imballaggi:{title:'Packaging',number:'06',image:'06_imballaggi',description:'Imballaggi e contenitori per custodire, trasportare e presentare.',items:['Scatole in cartone e per pizzerie','Imballaggi per alimenti','Contenitori in plastica','Buste e sacchetti','Film estensibile e reggette','Scatole e vassoi per dolci e pasticceria']}
+  "detergenza": {
+    "title": "Detergenza professionale",
+    "number": "01",
+    "image": "01_detergenza",
+    "description": "Dai pavimenti ai vetri, dalle superfici lavabili al bagno: una linea dedicata alla pulizia professionale. Comprende prodotti per cucine e mense, detergenti concentrati e soluzioni specifiche per lavastoviglie.",
+    "items": [
+      "Detergente pavimenti",
+      "Detergente superfici",
+      "Detergente vetri",
+      "Detergente bagno",
+      "Disincrostante",
+      "Sgrassatore",
+      "Detergente igienizzante",
+      "Detergente per superfici lavabili",
+      "Detergente per cucine e mense",
+      "Detergenti professionali concentrati",
+      "Brillantante lavastoviglie",
+      "Detergente lavastoviglie",
+      "Disincrostante lavastoviglie"
+    ]
+  },
+  "carta": {
+    "title": "Carta",
+    "number": "02",
+    "image": "02_carta",
+    "description": "Carta per l’igiene, l’asciugatura e il servizio. Dalla carta igienica ai tovaglioli, dagli asciugamani alla carta industriale: formati diversi per le esigenze quotidiane della tua attività.",
+    "items": [
+      "Carta igienica",
+      "Asciugamani piegati",
+      "Asciugamani in rotolo",
+      "Carta industriale",
+      "Bobine",
+      "Tovaglioli"
+    ]
+  },
+  "monouso": {
+    "title": "Monouso",
+    "number": "03",
+    "image": "03_monouso",
+    "description": "Una linea di prodotti monouso e consumabili per il lavoro di ogni giorno. Guanti e copriscarpe, bicchieri e cannucce, fino alle shopper bio.",
+    "items": [
+      "Guanti",
+      "Bicchieri",
+      "Cannucce",
+      "Copriscarpe",
+      "Shopper bio",
+      "Altri consumabili"
+    ]
+  },
+  "attrezzature": {
+    "title": "Attrezzature",
+    "number": "04",
+    "image": "04_attrezzature",
+    "description": "Gli strumenti per le operazioni di pulizia: mop, frange e manici, insieme a panni e spugne. La linea comprende anche secchi, carrelli, tergivetro e dispenser.",
+    "items": [
+      "Mop",
+      "Frange",
+      "Manici",
+      "Panni",
+      "Spugne",
+      "Secchi",
+      "Carrelli",
+      "Tergivetro",
+      "Dispenser"
+    ]
+  },
+  "food": {
+    "title": "Monouso per il settore food",
+    "number": "05",
+    "image": "05_food",
+    "description": "Prodotti monouso dedicati al settore alimentare: piatti e bicchieri, posate e contenitori in legno. Completano la linea vaschette e pellicole termosaldabili, box e vassoi.",
+    "items": [
+      "Piatti e bicchieri",
+      "Posate in legno",
+      "Contenitori in legno",
+      "Vaschette termosaldabili",
+      "Pellicole termosaldabili",
+      "Box e vassoi"
+    ]
+  },
+  "imballaggi": {
+    "title": "Imballaggi e contenitori",
+    "number": "06",
+    "image": "06_imballaggi",
+    "description": "Scatole, contenitori e materiali da imballaggio per la tua attività. La proposta include imballaggi per alimenti, scatole in cartone per pizzerie e scatole e vassoi per dolci e pasticceria.",
+    "items": [
+      "Scatole in cartone",
+      "Imballaggi per alimenti",
+      "Contenitori in plastica",
+      "Buste e sacchetti",
+      "Film estensibile",
+      "Reggette",
+      "Scatole in cartone per pizzerie",
+      "Scatole e vassoi per dolci e pasticceria"
+    ]
+  }
 };
 const loader=document.querySelector('.loader');
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
@@ -62,6 +152,6 @@ document.querySelectorAll('[data-product]').forEach(button=>button.addEventListe
 document.querySelectorAll('dialog').forEach(d=>{d.querySelector('.close').addEventListener('click',()=>d.close());d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}})});
 document.querySelector('#product-inquiry').addEventListener('click',()=>{document.querySelector('#category').value=currentProduct.title;dialog.close();document.querySelector('#contatti').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});document.querySelector('[name="name"]').focus({preventScroll:true})});
 document.querySelector('#privacy-button').addEventListener('click',()=>document.querySelector('#privacy-dialog').showModal());
-document.querySelector('#request-form').addEventListener('submit',e=>{e.preventDefault();const data=new FormData(e.currentTarget);const subject='Richiesta informazioni — '+data.get('category');const body=`Buongiorno,\n\nsono ${data.get('name')}${data.get('company')?' di '+data.get('company'):''}.\nSono interessato/a a: ${data.get('category')}.\n\n${data.get('message')}\n\nEmail: ${data.get('email')}\n\nGrazie,\n${data.get('name')}`;window.location.href='mailto:info@ernestomusca.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);document.querySelector('#form-status').textContent='Richiesta preparata. Completa l’invio nella tua app email. Se non si apre, scrivici su WhatsApp.'});
+document.querySelector('#request-form').addEventListener('submit',e=>{e.preventDefault();const data=new FormData(e.currentTarget);const subject='Richiesta informazioni — '+data.get('category');const body=`Buongiorno,\n\nsono ${data.get('name')}${data.get('company')?' di '+data.get('company'):''}.\nSono interessato/a a: ${data.get('category')}.\n\n${data.get('message')}\n\nEmail: ${data.get('email')}\n\nGrazie,\n${data.get('name')}`;window.location.href='mailto:info@ernestomusca.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);document.querySelector('#form-status').textContent='Richiesta preparata. Completa l’invio nella tua app email. Se non si apre, scrivi a info@ernestomusca.com.'});
 document.querySelector('#year').textContent=new Date().getFullYear();
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.body.classList.add('motion');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.07});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}
