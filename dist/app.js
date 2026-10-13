@@ -98,30 +98,32 @@ const products = {
 };
 const loader=document.querySelector('.loader');
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
-let introAnimations=[],introTimer;
-function finishIntro(){clearTimeout(introTimer);loader.hidden=true;introAnimations.forEach(a=>a.cancel());introAnimations=[]}
-function playIntro(){
- finishIntro();if(reduceMotion.matches)return;
- loader.hidden=false;
- const ease='cubic-bezier(.65,0,.25,1)';
- const animate=(element,frames,options)=>{const animation=element.animate(frames,{fill:'both',easing:ease,...options});introAnimations.push(animation);return animation};
- const stage=loader.querySelector('.brand-intro-stage');
- const mark=loader.querySelector('.brand-intro-mark');
- const name=loader.querySelector('.brand-intro-name');
- const offset=(stage.getBoundingClientRect().width-mark.getBoundingClientRect().width)/2;
- const scale=Math.max(1,Math.min(170,innerWidth*.36)/mark.getBoundingClientRect().width);
- const centered=`translateX(${offset}px) scale(${scale})`;
- animate(mark,[{opacity:0,transform:centered},{opacity:1,transform:centered}],{duration:420});
- animate(mark,[{transform:centered},{transform:'translateX(0) scale(1)'}],{delay:700,duration:1050});
- animate(name,[{opacity:0,clipPath:'inset(0 100% 0 0)',transform:'translateX(-14px)'},{opacity:1,clipPath:'inset(0 0% 0 0)',transform:'translateX(0)'}],{delay:1100,duration:900});
- const exit=animate(loader,[{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(-30px)'}],{delay:2550,duration:500});
- exit.finished.then(finishIntro).catch(()=>{});
- introTimer=setTimeout(finishIntro,3400);
+let introTimer;
+function finishIntro(){
+ clearTimeout(introTimer);
+ loader.hidden=true;
+ loader.classList.remove('is-playing');
 }
-reduceMotion.addEventListener('change',()=>{if(reduceMotion.matches)finishIntro()});
+function playIntro(){
+ finishIntro();
+ if(reduceMotion.matches)return;
+ // Arm the escape timer before showing anything; CSS also closes independently.
+ introTimer=setTimeout(finishIntro,3200);
+ try{
+  if(!loader.querySelector('.brand-intro-mark')||!loader.querySelector('.brand-intro-name'))return finishIntro();
+  loader.hidden=false;
+  void loader.offsetWidth;
+  loader.classList.add('is-playing');
+ }catch(error){finishIntro()}
+}
+loader.addEventListener('animationend',e=>{if(e.target===loader&&e.animationName==='intro-dismiss')finishIntro()});
+if(reduceMotion.addEventListener)reduceMotion.addEventListener('change',()=>{if(reduceMotion.matches)finishIntro()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')finishIntro()});
+window.addEventListener('pagehide',finishIntro);
+window.addEventListener('pageshow',e=>{if(e.persisted)finishIntro()});
 document.querySelector('#replay-intro').addEventListener('click',playIntro);
-playIntro();
+// Defer the decorative intro until the rest of the page is initialized.
+setTimeout(playIntro,0);
 const menu=document.querySelector('.menu-button'),nav=document.querySelector('.nav');
 function closeMenu(){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.innerHTML='Menu <span aria-hidden="true">＋</span>'}
 menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.innerHTML=open?'Chiudi <span aria-hidden="true">−</span>':'Menu <span aria-hidden="true">＋</span>'});
