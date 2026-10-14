@@ -121,7 +121,6 @@ if(reduceMotion.addEventListener)reduceMotion.addEventListener('change',()=>{if(
 document.addEventListener('keydown',e=>{if(e.key==='Escape')finishIntro()});
 window.addEventListener('pagehide',finishIntro);
 window.addEventListener('pageshow',e=>{if(e.persisted)finishIntro()});
-document.querySelector('#replay-intro').addEventListener('click',playIntro);
 // Defer the decorative intro until the rest of the page is initialized.
 setTimeout(playIntro,0);
 const menu=document.querySelector('.menu-button'),nav=document.querySelector('.nav');
