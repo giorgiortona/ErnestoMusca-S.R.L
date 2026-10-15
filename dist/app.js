@@ -144,11 +144,32 @@ window.addEventListener('scroll',()=>{if(!scrollQueued){scrollQueued=true;reques
 header.addEventListener('focusin',()=>header.classList.remove('header-away'));
 menu.addEventListener('click',()=>header.classList.remove('header-away'));
 updateHeader();
-const dialog=document.querySelector('#product-dialog');let currentProduct;
-document.querySelectorAll('[data-product]').forEach(button=>button.addEventListener('click',()=>{currentProduct=products[button.dataset.product];document.querySelector('#dialog-title').textContent=currentProduct.title;document.querySelector('#dialog-description').textContent=currentProduct.description;const img=document.querySelector('#dialog-image');img.src='assets/'+currentProduct.image+'.webp';img.alt=currentProduct.title;document.querySelector('#dialog-products').replaceChildren(...currentProduct.items.map(text=>{const li=document.createElement('li');li.textContent=text;return li}));dialog.showModal();dialog.querySelector('.product-dialog-scroll').scrollTop=0}));
 document.querySelectorAll('dialog').forEach(d=>{d.querySelector('.close').addEventListener('click',()=>d.close());d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}})});
-document.querySelector('#product-inquiry').addEventListener('click',()=>{document.querySelector('#category').value=currentProduct.title;dialog.close();document.querySelector('#contatti').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});document.querySelector('[name="name"]').focus({preventScroll:true})});
 document.querySelector('#privacy-button').addEventListener('click',()=>document.querySelector('#privacy-dialog').showModal());
 document.querySelector('#request-form').addEventListener('submit',e=>{e.preventDefault();const data=new FormData(e.currentTarget);const subject='Richiesta informazioni — '+data.get('category');const body=`Buongiorno,\n\nsono ${data.get('name')}${data.get('company')?' di '+data.get('company'):''}.\nSono interessato/a a: ${data.get('category')}.\n\n${data.get('message')}\n\nEmail: ${data.get('email')}\n\nGrazie,\n${data.get('name')}`;window.location.href='mailto:info@ernestomusca.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);document.querySelector('#form-status').textContent='Richiesta preparata. Completa l’invio nella tua app email. Se non si apre, scrivi a info@ernestomusca.com.'});
 document.querySelector('#year').textContent=new Date().getFullYear();
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.body.classList.add('motion');const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.07});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}
+
+// Native page scrolling controls the image; content stays readable without JavaScript.
+const stories=[...document.querySelectorAll('.line-story')];
+const visuals=[...document.querySelectorAll('.line-visual')];
+const progress=[...document.querySelectorAll('.line-progress span')];
+let activeLine=-1,lineFrame=0;
+function syncLineImage(){
+ lineFrame=0;
+ const anchor=window.innerHeight*.45;
+ let next=0;
+ stories.forEach((story,i)=>{if(story.getBoundingClientRect().top<=anchor)next=i});
+ if(next===activeLine)return;
+ activeLine=next;
+ visuals.forEach((visual,i)=>visual.classList.toggle('is-active',i===next));
+ progress.forEach((item,i)=>item.classList.toggle('is-active',i===next));
+}
+function queueLineSync(){if(!lineFrame)lineFrame=requestAnimationFrame(syncLineImage)}
+window.addEventListener('scroll',queueLineSync,{passive:true});
+window.addEventListener('resize',queueLineSync);
+window.addEventListener('pageshow',queueLineSync);
+syncLineImage();
+document.querySelectorAll('[data-inquiry]').forEach(link=>link.addEventListener('click',()=>{
+ document.querySelector('#category').value=products[link.dataset.inquiry].title;
+}));
