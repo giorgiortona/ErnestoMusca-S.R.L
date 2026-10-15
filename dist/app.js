@@ -153,7 +153,6 @@ if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduc
 // Native page scrolling controls the image; content stays readable without JavaScript.
 const stories=[...document.querySelectorAll('.line-story')];
 const visuals=[...document.querySelectorAll('.line-visual')];
-const progress=[...document.querySelectorAll('.line-progress span')];
 let activeLine=-1,lineFrame=0;
 function syncLineImage(){
  lineFrame=0;
@@ -163,7 +162,6 @@ function syncLineImage(){
  if(next===activeLine)return;
  activeLine=next;
  visuals.forEach((visual,i)=>visual.classList.toggle('is-active',i===next));
- progress.forEach((item,i)=>item.classList.toggle('is-active',i===next));
 }
 function queueLineSync(){if(!lineFrame)lineFrame=requestAnimationFrame(syncLineImage)}
 window.addEventListener('scroll',queueLineSync,{passive:true});
