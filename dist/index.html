@@ -11,15 +11,36 @@
 <body>
 <a class="skip" href="#contenuto">Vai al contenuto</a>
 <div class="loader" aria-hidden="true" hidden>
-  <div class="brand-intro-stage">
-    <img class="brand-intro-mark" src="assets/logo.svg" width="257" height="264" alt="">
-    <img class="brand-intro-name" src="assets/nome-vettoriale.svg" width="772" height="84" alt="">
+  <div class="loader-inner">
+    <div class="brand-intro-stage">
+      <div class="brand-intro-mark">
+        <img class="logo-piece piece-e" src="assets/logo.svg" alt="">
+        <img class="logo-piece piece-left" src="assets/logo.svg" alt="">
+        <img class="logo-piece piece-right" src="assets/logo.svg" alt="">
+        <img class="logo-piece piece-bottom" src="assets/logo.svg" alt="">
+      </div>
+      <img class="brand-intro-name" src="assets/nome-vettoriale.svg" width="772" height="84" alt="">
+    </div>
   </div>
 </div>
 <header class="site-header"><div class="header wrap">
 <a class="brand" href="#" aria-label="Ernesto Musca, inizio pagina"><img src="assets/logo.svg" alt="" width="56" height="56"><div class="brand-name">Ernesto Musca<span>Forniture professionali</span></div></a>
-<button class="menu-button" aria-expanded="false" aria-controls="navigation">Menu <span aria-hidden="true">＋</span></button>
-<nav class="nav" id="navigation" aria-label="Navigazione principale"><a href="#contenuto">Home</a><a href="#azienda">Chi siamo</a><a href="#prodotti">I prodotti</a><a href="#contatti">Contatti</a></nav>
+<button class="menu-button" aria-expanded="false" aria-controls="navigation" aria-label="Apri il menu"><span class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></span></button>
+<nav class="nav" id="navigation" aria-label="Navigazione principale"><div class="nav-grid">
+<div class="nav-links">
+<a href="#contenuto">Home</a><a href="#azienda">Chi siamo</a><a href="#prodotti">I prodotti</a><ul class="nav-categories"><li><button type="button" data-product="detergenza">Detergenza professionale</button></li><li><button type="button" data-product="carta">Carta</button></li><li><button type="button" data-product="monouso">Monouso</button></li><li><button type="button" data-product="attrezzature">Attrezzature</button></li><li><button type="button" data-product="food">Monouso per il settore food</button></li><li><button type="button" data-product="imballaggi">Imballaggi e contenitori</button></li></ul><a href="#contatti">Contatti</a>
+</div>
+<div class="nav-info">
+<div class="nav-info-stage">
+<div class="nav-info-brand">
+<img class="nav-info-logo" src="assets/logo.svg" alt="Ernesto Musca">
+<span class="nav-info-name">ERNESTO MUSCA</span>
+</div>
+<img class="nav-info-preview" alt="">
+</div>
+<div class="nav-info-contacts"><a href="tel:+393246029841">324 602 9841 <span aria-hidden="true">↗</span></a><a href="mailto:info@ernestomusca.com">info@ernestomusca.com <span aria-hidden="true">↗</span></a></div>
+</div>
+</div></nav>
 </div></header>
 <main id="contenuto">
 <section class="hero" aria-labelledby="hero-title">

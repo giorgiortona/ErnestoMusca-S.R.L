@@ -98,22 +98,25 @@ const products = {
 };
 const loader=document.querySelector('.loader');
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
-let introTimer;
+let introTimer,buildTimer;
 function finishIntro(){
  clearTimeout(introTimer);
+ clearTimeout(buildTimer);
  loader.hidden=true;
- loader.classList.remove('is-playing');
+ loader.classList.remove('is-playing','mark-build');
 }
 function playIntro(){
  finishIntro();
  if(reduceMotion.matches)return;
  // Arm the escape timer before showing anything; CSS also closes independently.
- introTimer=setTimeout(finishIntro,3200);
+ introTimer=setTimeout(finishIntro,3800);
  try{
   if(!loader.querySelector('.brand-intro-mark')||!loader.querySelector('.brand-intro-name'))return finishIntro();
   loader.hidden=false;
   void loader.offsetWidth;
   loader.classList.add('is-playing');
+  // Only reveal the star/M pieces once the E has had its moment alone.
+  buildTimer=setTimeout(()=>loader.classList.add('mark-build'),1000);
  }catch(error){finishIntro()}
 }
 loader.addEventListener('animationend',e=>{if(e.target===loader&&e.animationName==='intro-dismiss')finishIntro()});
@@ -123,11 +126,37 @@ window.addEventListener('pagehide',finishIntro);
 window.addEventListener('pageshow',e=>{if(e.persisted)finishIntro()});
 // Defer the decorative intro until the rest of the page is initialized.
 setTimeout(playIntro,0);
+const headerBrand=document.querySelector('.site-header .brand');
+if(headerBrand)headerBrand.addEventListener('click',e=>{
+ e.preventDefault();
+ playIntro();
+ window.scrollTo({top:0,behavior:reduceMotion.matches?'instant':'smooth'});
+});
 const menu=document.querySelector('.menu-button'),nav=document.querySelector('.nav');
-function closeMenu(){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.innerHTML='Menu <span aria-hidden="true">＋</span>'}
-menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.innerHTML=open?'Chiudi <span aria-hidden="true">−</span>':'Menu <span aria-hidden="true">＋</span>'});
-nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+function closeMenu(){nav.classList.remove('open');document.body.classList.remove('menu-open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Apri il menu')}
+function openMenu(){nav.classList.add('open');document.body.classList.add('menu-open');menu.setAttribute('aria-expanded','true');menu.setAttribute('aria-label','Chiudi il menu')}
+menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');document.body.classList.toggle('menu-open',open);menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Chiudi il menu':'Apri il menu')});
+nav.querySelectorAll('a,button').forEach(a=>a.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){closeMenu();menu.focus()}});
+const navInfo=document.querySelector('.nav-info'),navPreview=document.querySelector('.nav-info-preview');
+nav.querySelectorAll('.nav-categories button[data-product]').forEach(btn=>{
+ btn.addEventListener('mouseenter',()=>{
+  const p=products[btn.dataset.product];
+  if(!p||!navPreview)return;
+  navPreview.src='assets/'+p.image+'.webp';
+  navPreview.alt=p.title;
+  navInfo.classList.add('previewing');
+ });
+ btn.addEventListener('mouseleave',()=>navInfo.classList.remove('previewing'));
+ btn.addEventListener('focus',()=>{
+  const p=products[btn.dataset.product];
+  if(!p||!navPreview)return;
+  navPreview.src='assets/'+p.image+'.webp';
+  navPreview.alt=p.title;
+  navInfo.classList.add('previewing');
+ });
+ btn.addEventListener('blur',()=>navInfo.classList.remove('previewing'));
+});
 const header=document.querySelector('.site-header');
 let lastScroll=window.scrollY,travel=0,lastDirection=0,scrollQueued=false;
 function updateHeader(){
@@ -144,10 +173,11 @@ window.addEventListener('scroll',()=>{if(!scrollQueued){scrollQueued=true;reques
 header.addEventListener('focusin',()=>header.classList.remove('header-away'));
 menu.addEventListener('click',()=>header.classList.remove('header-away'));
 updateHeader();
-const dialog=document.querySelector('#product-dialog');let currentProduct;
-document.querySelectorAll('[data-product]').forEach(button=>button.addEventListener('click',()=>{currentProduct=products[button.dataset.product];document.querySelector('#dialog-title').textContent=currentProduct.title;document.querySelector('#dialog-description').textContent=currentProduct.description;const img=document.querySelector('#dialog-image');img.src='assets/'+currentProduct.image+'.webp';img.alt=currentProduct.title;document.querySelector('#dialog-products').replaceChildren(...currentProduct.items.map(text=>{const li=document.createElement('li');li.textContent=text;return li}));dialog.showModal();dialog.querySelector('.product-dialog-scroll').scrollTop=0}));
+const dialog=document.querySelector('#product-dialog');let currentProduct,dialogOpenedFromNav=false;
+document.querySelectorAll('[data-product]').forEach(button=>button.addEventListener('click',()=>{dialogOpenedFromNav=nav.contains(button);currentProduct=products[button.dataset.product];document.querySelector('#dialog-title').textContent=currentProduct.title;document.querySelector('#dialog-description').textContent=currentProduct.description;const img=document.querySelector('#dialog-image');img.src='assets/'+currentProduct.image+'.webp';img.alt=currentProduct.title;document.querySelector('#dialog-products').replaceChildren(...currentProduct.items.map(text=>{const li=document.createElement('li');li.textContent=text;return li}));dialog.showModal();dialog.querySelector('.product-dialog-scroll').scrollTop=0}));
 document.querySelectorAll('dialog').forEach(d=>{d.querySelector('.close').addEventListener('click',()=>d.close());d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}})});
-document.querySelector('#product-inquiry').addEventListener('click',()=>{document.querySelector('#category').value=currentProduct.title;dialog.close();document.querySelector('#contatti').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});document.querySelector('[name="name"]').focus({preventScroll:true})});
+dialog.addEventListener('close',()=>{if(dialogOpenedFromNav){dialogOpenedFromNav=false;openMenu()}});
+document.querySelector('#product-inquiry').addEventListener('click',()=>{dialogOpenedFromNav=false;document.querySelector('#category').value=currentProduct.title;dialog.close();document.querySelector('#contatti').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});document.querySelector('[name="name"]').focus({preventScroll:true})});
 document.querySelector('#privacy-button').addEventListener('click',()=>document.querySelector('#privacy-dialog').showModal());
 document.querySelector('#request-form').addEventListener('submit',e=>{e.preventDefault();const data=new FormData(e.currentTarget);const subject='Richiesta informazioni — '+data.get('category');const body=`Buongiorno,\n\nsono ${data.get('name')}${data.get('company')?' di '+data.get('company'):''}.\nSono interessato/a a: ${data.get('category')}.\n\n${data.get('message')}\n\nEmail: ${data.get('email')}\n\nGrazie,\n${data.get('name')}`;window.location.href='mailto:info@ernestomusca.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);document.querySelector('#form-status').textContent='Richiesta preparata. Completa l’invio nella tua app email. Se non si apre, scrivi a info@ernestomusca.com.'});
 document.querySelector('#year').textContent=new Date().getFullYear();
