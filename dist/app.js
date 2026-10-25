@@ -236,6 +236,18 @@
     showPanel('email');
   }
 
+  /* Pagine legali: evidenzia nell'indice la sezione che si sta leggendo */
+  var tocLinks = $$('.legal-toc a');
+  if (tocLinks.length && 'IntersectionObserver' in window) {
+    var tocIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        tocLinks.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('href') === '#' + e.target.id); });
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    $$('.legal-section').forEach(function (s) { tocIo.observe(s); });
+  }
+
   /* Dialog */
   $$('[data-open]').forEach(function (b) { b.addEventListener('click', function () { var d = document.getElementById(b.dataset.open); if (d) d.showModal(); }); });
   $$('dialog').forEach(function (d) {
