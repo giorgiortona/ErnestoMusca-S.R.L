@@ -101,6 +101,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.0
 .menu-open .site-header{color:var(--paper)}
 .menu-open .site-header::before{background:transparent;backdrop-filter:none;border-color:transparent}
 
+<<<<<<< Updated upstream
 .menu{position:fixed;inset:0;z-index:90;background:var(--ink);color:var(--paper);display:flex;padding:calc(var(--header-h) + 24px) var(--gutter) 32px;clip-path:inset(0 0 100% 0);transition:clip-path .7s var(--ease-io)}
 .menu[hidden]{display:flex;visibility:hidden}
 .menu.is-open{clip-path:inset(0 0 0 0);visibility:visible}
@@ -113,6 +114,19 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.0
 .menu.is-open .menu-links a:nth-child(2){transition-delay:.05s}.menu.is-open .menu-links a:nth-child(3){transition-delay:.1s}.menu.is-open .menu-links a:nth-child(4){transition-delay:.15s}.menu.is-open .menu-links a:nth-child(5){transition-delay:.2s}
 .menu-foot{display:flex;flex-direction:column;gap:6px;color:var(--muted-dark);font-size:15px}
 .menu-foot a{color:var(--paper)}
+=======
+/* Full vector logo, no raster pieces or clipped seams. */
+.loader[hidden]{display:none!important}
+.loader:not([hidden]){animation:intro-dismiss .35s ease 2.3s forwards}
+.brand-intro-mark{opacity:0;transform:translateX(152.335%)}
+.is-playing .brand-intro-mark{animation:intro-mark-in .35s ease both,intro-mark-left .85s var(--ease) .5s both}
+.is-playing .brand-intro-name{animation:intro-name-in .7s var(--ease) .8s both}
+@keyframes intro-mark-in{from{opacity:0}to{opacity:1}}
+@keyframes intro-mark-left{from{transform:translateX(152.335%)}to{transform:translateX(0)}}
+@keyframes intro-name-in{from{opacity:0;clip-path:inset(0 100% 0 0);transform:translateX(-12px)}to{opacity:1;clip-path:inset(0);transform:translateX(0)}}
+@keyframes intro-dismiss{to{opacity:0;visibility:hidden}}
+@media(prefers-reduced-motion:reduce){.loader{display:none!important}}
+>>>>>>> Stashed changes
 
 /* Hero */
 .hero{position:relative;height:250vh;background:var(--ink);color:var(--paper);--p:0}
