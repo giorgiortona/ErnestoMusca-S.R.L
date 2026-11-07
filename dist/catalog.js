@@ -26,8 +26,7 @@
     var sec = document.createElement('section');
     sec.className = 'cat-line'; sec.id = line.id; sec.dataset.line = line.id;
     sec.setAttribute('aria-labelledby', 't-' + line.id);
-    var html = '<aside class="cat-aside"><span class="num">' + line.n + '</span><h2 id="t-' + line.id + '">' + esc(line.title) + '</h2>' +
-      '<p class="lead">' + esc(line.lead) + '</p><p>' + esc(line.text) + '</p>' +
+    var html = '<aside class="cat-aside"><h2 id="t-' + line.id + '">' + esc(line.title) + '</h2>' +
       '<div class="cat-img"><img src="' + line.image + '" alt="' + esc(line.title) + '" width="800" height="1000" loading="lazy"></div></aside>' +
       '<div class="cat-families">';
     line.families.forEach(function (f, i) {
@@ -36,8 +35,8 @@
         '<button class="family-head" type="button" aria-expanded="' + (i === 0) + '" aria-controls="' + id + '"><h3>' + esc(f.name) + '</h3><span class="count">' + f.items.length + ' prodotti</span><span class="pm" aria-hidden="true"></span></button>' +
         '<div class="family-body" id="' + id + '"><div><div class="family-inner">' +
         '<ul class="family-items">' + f.items.map(function (t) { return '<li data-item="' + esc(t) + '">' + esc(t) + '</li>'; }).join('') + '</ul>' +
-        '<div class="family-brands"><small>Marchi</small>' +
-        (f.brands.length ? f.brands.map(function (b) { var br = brandById[b]; return br ? '<a href="marchi.html#marchio-' + br.id + '">' + esc(br.name) + '<span>' + esc(br.place) + '</span></a>' : ''; }).join('') : '<p class="none">Selezione multimarca, scelta in base all’uso.</p>') +
+        '<div class="family-brands">' + (f.brands.length ? '<small>Marchi</small>' : '') +
+        (f.brands.length ? f.brands.map(function (b) { var br = brandById[b]; return br ? '<a href="marchi.html#marchio-' + br.id + '">' + esc(br.name) + '</a>' : ''; }).join('') : '') +
         '<a class="family-cta" href="index.html?linea=' + line.id + '#contatti">Richiedi informazioni →</a></div>' +
         '</div></div></div></div>';
     });

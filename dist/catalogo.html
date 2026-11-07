@@ -7,10 +7,10 @@
 <meta name="description" content="Il catalogo Ernesto Musca: detergenza, carta, monouso, attrezzature, monouso per il food e imballaggi, organizzati per famiglie di prodotto.">
 <meta name="theme-color" content="#f4f0e8">
 <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=11">
-<script src="data.js?v=11" defer></script>
-<script src="app.js?v=11" defer></script>
-<script src="catalog.js?v=11" defer></script>
+<link rel="stylesheet" href="style.css?v=13">
+<script src="data.js?v=12" defer></script>
+<script src="app.js?v=12" defer></script>
+<script src="catalog.js?v=13" defer></script>
 </head>
 <body class="page-catalog">
 <a class="skip" href="#contenuto">Vai al contenuto</a>
@@ -28,7 +28,7 @@
       <a href="index.html#azienda">Azienda</a>
     </nav>
     <div class="header-actions">
-      <a class="btn btn-sm btn-accent" href="index.html#contatti">Preventivo <span class="btn-arrow" aria-hidden="true">→</span></a>
+
       <button class="menu-toggle" aria-expanded="false" aria-controls="menu" aria-label="Apri il menu"><span></span><span></span></button>
     </div>
   </div>
@@ -53,12 +53,7 @@
 
 <main id="contenuto">
   <section class="cat-hero wrap" aria-labelledby="cat-title">
-    <p class="kicker reveal">Ernesto Musca · Catalogo prodotti</p>
     <h1 id="cat-title" class="reveal">Il <em>catalogo.</em></h1>
-    <div class="cat-intro">
-      <p class="reveal">Sei linee, organizzate per famiglie di prodotto, con i marchi partner che le firmano. Cerca quello che ti serve o filtra per linea: per formati, disponibilità e prezzi ti rispondiamo noi.</p>
-      <a class="btn btn-dark reveal" href="index.html#contatti">Chiedi un preventivo <span class="btn-arrow" aria-hidden="true">→</span></a>
-    </div>
   </section>
 
   <div class="cat-body">
@@ -67,17 +62,17 @@
       <div class="cat-filters" id="cat-filters" role="group" aria-label="Filtra per linea"></div>
       <label class="cat-search"><span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Cerca un prodotto</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input type="search" id="cat-search" placeholder="Cerca: guanti, pirottini, brillantante…" autocomplete="off">
+        <input type="search" id="cat-search" placeholder="Cerca un prodotto" autocomplete="off">
       </label>
     </div>
   </div>
 
   <div class="wrap" id="cat-lines"></div>
-  <p class="wrap cat-empty" id="cat-empty" role="status" hidden>Nessun prodotto trovato. <a href="index.html#contatti" style="text-decoration:underline">Chiedici direttamente</a>: spesso lo abbiamo comunque.</p>
+  <p class="wrap cat-empty" id="cat-empty" role="status" hidden>Nessun prodotto trovato. <a href="index.html#contatti" style="text-decoration:underline">Chiedici direttamente</a>.</p>
   </div>
 
   <section class="cat-cta wrap" aria-labelledby="cat-cta-title">
-    <h2 id="cat-cta-title" class="reveal">Non trovi<br><em>quello che cerchi?</em></h2>
+    <h2 id="cat-cta-title" class="reveal">Informazioni</h2>
     <a class="btn btn-accent reveal" href="index.html#contatti">Scrivici <span class="btn-arrow" aria-hidden="true">→</span></a>
   </section>
 </main>
