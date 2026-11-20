@@ -553,3 +553,8 @@ dialog p{color:var(--muted);font-size:16px}
 .page-catalog .cat-img{margin-top:24px}
 .page-catalog .cat-cta{padding-block:56px}
 .page-catalog .cat-cta h2{font-size:clamp(32px,4vw,48px);margin-bottom:24px}
+
+/* Background texture: staggered Ernesto Musca mark, fixed and very light. */
+body{position:relative}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:url("assets/trama-ernesto.svg") 0 0/300px auto repeat;opacity:.08}
+@media(max-width:760px){body::before{background-size:220px auto}}
